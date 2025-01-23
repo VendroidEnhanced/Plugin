@@ -15,16 +15,32 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Clone plugin
+              run: git clone https://github.com/VendroidEnhanced/plugin .
+            
             - name: Clone Vencord
-              run: git clone https://github.com/Vendicated/Vencord
+              run: git clone https://github.com/Vendicated/Vencord working
 
-            - name: Move Vencord at root
-              run: mv -f Vencord/* .
+            - uses: pnpm/action-setup@v3
 
-            - name: Move git (hidden folder)
-              run: mv -f Vencord/.git .
+            - name: Apply patches from common
+              run: |
+              for patch in $(find ./common -name "*.patch"); do
+                git apply $patch
+              done
 
-            - uses: pnpm/action-setup@v3 # Install pnpm using packageManager key in package.json
+            - name: Apply common files # i love ai
+              run: |
+              for file in $(find ./common -type f); do
+                relative_path=$(echo $file | sed 's|./common/||')
+                target_path="./working/$relative_path"
+                target_dir=$(dirname $target_path)
+                mkdir -p $target_dir
+                cp $file $target_path
+              done
+
+            - name: ls
+              run: ls src/components/VencordSettings
 
             - name: Use Node.js 20
               uses: actions/setup-node@v4
@@ -35,14 +51,6 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Fetch patch file
-              run: wget https://raw.githubusercontent.com/VendroidEnhanced/plugin/refs/heads/main/vde.patch
-
-            - name: Apply patch
-              run: git apply vde.patch
-
-            - name: ls
-              run: ls
             - name: Build web
               run: pnpm buildWeb --standalone
 
