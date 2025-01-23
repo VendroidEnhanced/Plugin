@@ -23,4 +23,3 @@ index d58c7a98..ca5014d3 100644
              IS_DEV && {
                  section: "VencordPatchHelper",
                  label: "Patch Helper",
-                 
