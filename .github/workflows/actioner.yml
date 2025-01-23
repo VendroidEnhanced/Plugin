@@ -25,19 +25,19 @@ jobs:
 
             - name: Apply patches from common
               run: |
-              for patch in $(find ./common -name "*.patch"); do
-                git apply $patch
-              done
+                for patch in $(find ./common -name "*.patch"); do
+                  git apply $patch
+                done
 
             - name: Apply common files # i love ai
               run: |
-              for file in $(find ./common -type f); do
-                relative_path=$(echo $file | sed 's|./common/||')
-                target_path="./working/$relative_path"
-                target_dir=$(dirname $target_path)
-                mkdir -p $target_dir
-                cp $file $target_path
-              done
+                for file in $(find ./common -type f); do
+                  relative_path=$(echo $file | sed 's|./common/||')
+                  target_path="./working/$relative_path"
+                  target_dir=$(dirname $target_path)
+                  mkdir -p $target_dir
+                  cp $file $target_path
+                done
 
             - name: ls
               run: ls src/components/VencordSettings
