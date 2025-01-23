@@ -11,15 +11,15 @@ index d58c7a98..ca5014d3 100644
  import { getIntlMessage } from "@utils/discord";
  import definePlugin, { OptionType } from "@utils/types";
 @@ -124,6 +125,12 @@ export default definePlugin({
-                 element: BackupAndRestoreTab,
-                 className: "vc-backup-restore"
-             },
+                  element: BackupAndRestoreTab,
+                  className: "vc-backup-restore"
+              },
 +            {
 +                section: "VendroidSettings",
 +                label: "Vendroid Settings",
 +                element: VendroidTab,
 +                className: "vc-vendroid"
 +            },
-             IS_DEV && {
-                 section: "VencordPatchHelper",
-                 label: "Patch Helper",
+              IS_DEV && {
+                  section: "VencordPatchHelper",
+                  label: "Patch Helper",
