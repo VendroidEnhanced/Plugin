@@ -20,9 +20,7 @@ jobs:
             
             - name: Clone Vencord
               run: git clone https://github.com/Vendicated/Vencord working
-
-            - uses: pnpm/action-setup@v3
-
+              
             - name: Apply patches from common
               run: |
                 for patch in $(find ./common -name "*.patch"); do
